@@ -73,7 +73,7 @@ class OrderController extends Controller
         // Cleanly generate paginated results for display
         $orders = $query->orderBy('orders.order_date', 'desc')->paginate(15)->withQueryString();
 
-        return view('ogtech.synced', compact('orders', 'allFilteredOrders', 'totalOrders', 'pendingCount', 'shippedCount', 'cancelledCount'));
+        return view('admin.synced', compact('orders', 'allFilteredOrders', 'totalOrders', 'pendingCount', 'shippedCount', 'cancelledCount'));
     }
 
     public function show($order_code)

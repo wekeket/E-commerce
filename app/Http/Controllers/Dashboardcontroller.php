@@ -44,7 +44,7 @@ class DashboardController extends Controller
             ? DB::table('orders')->where('status', 'Pending')->count()
             : 0;
 
-        return view('ogtech.MenuDashboard', compact(
+        return view('admin.MenuDashboard', compact(
             'activeProducts',
             'totalRevenue',
             'totalOrders',
@@ -111,7 +111,7 @@ class DashboardController extends Controller
                 ->get()
             : collect();
 
-        return view('ogtech.reports', [
+        return view('admin.reports', [
             'monthLabels'     => $monthLabels,
             'monthlyRevenue'  => $monthlyRevenue,
             'monthlyOrders'   => $monthlyOrders,

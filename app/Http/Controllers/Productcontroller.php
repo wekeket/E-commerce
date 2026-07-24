@@ -146,7 +146,7 @@ class ProductController extends Controller
      */
     public function productsIndex()
     {
-        return view('ogtech.ProdDashboard', $this->productListData());
+        return view('admin.ProdDashboard', $this->productListData());
     }
 
     /**
@@ -154,7 +154,7 @@ class ProductController extends Controller
      */
     public function inventoryIndex()
     {
-        return view('ogtech.index', $this->productListData());
+        return view('admin.index', $this->productListData());
     }
 
     /**
@@ -194,7 +194,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('ogtech.Addproduct');
+        return view('admin.Addproduct');
     }
 
     /**
@@ -244,7 +244,7 @@ class ProductController extends Controller
     {
         $categories = \Illuminate\Support\Facades\DB::table('categories')->orderBy('name')->get();
 
-        return view('ogtech.edit-product', compact('product', 'categories'));
+        return view('admin.edit-product', compact('product', 'categories'));
     }
 
     /**
