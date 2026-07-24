@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('email', 150)->unique();
             $table->string('password_hash', 255);
             $table->string('full_name', 150)->nullable();
-            $table->enum('role', ['admin', 'staff'])->default('user');
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->timestamp('created_at')->nullable()->useCurrent();
             // Note: no `updated_at` column — matches the current dump,
             // and App\Models\User has $timestamps = false to match.
