@@ -240,9 +240,11 @@
                                                 <button onclick="alert('Retrying manual ERP sync for {{ $order->order_code }}...')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
                                                     <i class="fas fa-sync-alt text-gray-400 w-4"></i> Retry Sync to ERP
                                                 </button>
-                                                <button onclick="alert('Viewing Invoice for {{ $order->order_code }}')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
-                                                    <i class="fas fa-file-invoice text-gray-400 w-4"></i> View Invoice
-                                                </button>
+                                                <a href="{{ route('orders.invoice', urlencode($order->order_code)) }}" 
+   target="_blank" 
+   class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
+    <i class="fas fa-file-invoice text-gray-400 w-4"></i> View Invoice
+</a>
                                                 <button onclick="alert('Printing Packing Slip for {{ $order->order_code }}')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
                                                     <i class="fas fa-print text-gray-400 w-4"></i> Print Packing Slip
                                                 </button>

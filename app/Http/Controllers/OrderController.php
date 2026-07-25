@@ -109,6 +109,46 @@ class OrderController extends Controller
     return view('admin.show', compact('order'));
 }
 
+public function showInvoice($code)
+{
+    $decodedCode = urldecode($code);
+
+    // 1. Fetch main order and customer info
+    $order = DB::table('orders')
+        ->leftJoin('customers', 'orders.customer_id', '=', 'customers.id')
+        ->leftJoin('customer_transactions', 'orders.id', '=', 'customer_transactions.order_id')
+        ->where('orders.order_code', $decodedCode)
+        ->select(
+            'orders.id',
+            'orders.order_code',
+            'orders.order_date',
+            'orders.total_amount',
+            'orders.payment_method',
+            'orders.status',
+            'customers.name as customer_name',
+            'customer_transactions.store as channel'
+        )
+        ->first();
+
+    // Trigger 404 if order code isn't found
+    if (!$order) {
+        abort(404);
+    }
+
+    
+  // 2. Fetch line items
+$orderItems = DB::table('order_items')
+    ->leftJoin('products', 'order_items.product_id', '=', 'products.id')
+    ->where('order_items.order_id', $order->id)
+    ->select(
+        'order_items.quantity',
+        'order_items.unit_price',
+        'products.product_name' // Updated from products.name
+    )
+    ->get();
+    return view('admin.invoice', compact('order', 'orderItems'));
+}
+
     public function bulkUpdate(Request $request)
     {
         $request->validate([

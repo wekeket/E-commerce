@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/sync', [ProductController::class, 'syncInventory'])->name('inventory.sync');
 
     // ---- Orders ----
+    Route::get('/orders/{code}/invoice', [OrderController::class, 'showInvoice'])->name('orders.invoice');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/synced/sync', [OrderController::class, 'sync'])->name('orders.sync');
     Route::post('/orders/bulk-update', [OrderController::class, 'bulkUpdate'])->name('orders.bulk-update');
