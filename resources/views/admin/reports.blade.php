@@ -179,22 +179,22 @@
         <a class="nav-btn" href="{{ route('dashboard') }}">
             <span class="icon-box icon-blue">🔲</span> Dashboard
         </a>
-        <a class="nav-btn disabled" title="Not wired up yet">
+        <a class="nav-btn" title="Not wired up yet">
             <span class="icon-box icon-slate">📦</span> Inventory
         </a>
-        <a class="nav-btn disabled" title="Not wired up yet">
+        <a class="nav-btn" title="Not wired up yet">
             <span class="icon-box icon-orange">🛒</span> Orders
         </a>
-        <a class="nav-btn disabled" title="Not wired up yet">
+        <a class="nav-btn" title="Not wired up yet">
             <span class="icon-box icon-yellow">🏷️</span> Products
         </a>
-        <a class="nav-btn disabled" title="Not wired up yet">
+        <a class="nav-btn" title="Not wired up yet">
             <span class="icon-box icon-slate">💳</span> Customers &amp; Payments
         </a>
         <a class="nav-btn active" href="{{ route('reports') }}">
             <span class="icon-box">📊</span> Reports
         </a>
-        <a class="nav-btn disabled" title="Not wired up yet">
+        <a class="nav-btn" title="Not wired up yet">
             <span class="icon-box icon-slate">⚙️</span> Settings
         </a>
     </nav>
@@ -203,10 +203,6 @@
 <!-- ================= MAIN ================= -->
 <div class="main">
     <div class="topbar">
-        <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-            @csrf
-            <button type="submit" class="logout-pill" style="background:#f16a6a;color:#fff;font-size:11px;font-weight:700;letter-spacing:.5px;padding:6px 14px;border-radius:14px;border:none;cursor:pointer;" onclick="return confirm('Log out of OG TECH?');">LOGOUT</button>
-        </form>
         <input class="top-search" type="text" placeholder="Search">
         <button class="icon-btn">🔔</button>
         <button class="icon-btn">⚙️</button>
