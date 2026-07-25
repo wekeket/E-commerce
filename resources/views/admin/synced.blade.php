@@ -3,11 +3,19 @@
 @section('content')
 <div>
     <!-- View Structural Header -->
-    <header class="mb-5 flex items-center gap-3">
-        <h1 class="text-[28px] font-bold text-[#0a2973] tracking-tight">Order Management</h1>
+    <header class="mb-5 flex items-center justify-between">
+        <div>
+            <h1 class="text-[28px] font-bold text-[#0a2973] tracking-tight">Order Management</h1>
+            <p class="text-xs text-gray-500 font-medium">E-Commerce Gateway &amp; ERP Integration Ledger</p>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> E-Commerce Bridge Connected
+            </span>
+        </div>
     </header>
 
-    <!-- Master Column Splitting Grid Framework (Wrapped around Metrics + Table) -->
+    <!-- Master Column Splitting Grid Framework -->
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-5 items-start">
         
         <!-- Left Column Wrapper (Holds Metrics Cards and Orders Table together) -->
@@ -25,15 +33,15 @@
 
                 <div class="bg-[#1e3d92] text-white p-4 rounded-xl shadow-sm flex flex-col justify-between min-h-[90px]">
                     <div class="flex justify-between items-center text-[10px] font-bold tracking-wider text-gray-300 uppercase">
-                        <span>Pending</span>
-                        <i class="fas fa-exclamation-triangle text-xs opacity-80"></i>
+                        <span>Pending / Processing</span>
+                        <i class="fas fa-clock text-xs opacity-80"></i>
                     </div>
                     <div class="text-2xl font-extrabold tracking-tight mt-1 text-center text-[#fca311]">{{ number_format($pendingCount) }}</div>
                 </div>
 
                 <div class="bg-[#1e3d92] text-white p-4 rounded-xl shadow-sm flex flex-col justify-between min-h-[90px]">
                     <div class="flex justify-between items-center text-[10px] font-bold tracking-wider text-gray-300 uppercase">
-                        <span>Shipped</span>
+                        <span>Shipped / In Transit</span>
                         <i class="fas fa-truck text-xs opacity-80"></i>
                     </div>
                     <div class="text-2xl font-extrabold tracking-tight mt-1 text-center text-[#00c49f]">{{ number_format($shippedCount) }}</div>
@@ -41,7 +49,7 @@
 
                 <div class="bg-[#1e3d92] text-white p-4 rounded-xl shadow-sm flex flex-col justify-between min-h-[90px]">
                     <div class="flex justify-between items-center text-[10px] font-bold tracking-wider text-gray-300 uppercase">
-                        <span>Cancelled</span>
+                        <span>Cancelled / Returned</span>
                         <i class="fas fa-exclamation-circle text-xs opacity-80"></i>
                     </div>
                     <div class="text-2xl font-extrabold tracking-tight mt-1 text-center text-[#ff4d4d]">{{ number_format($cancelledCount) }}</div>
@@ -50,7 +58,7 @@
 
             <!-- Orders Table Container Box -->
             <div class="w-full">
-                <!-- Combined Toolbar Form with layout fix -->
+                <!-- Combined Toolbar Form -->
                 <form action="{{ url()->current() }}" method="GET" class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 mb-4 w-full">
                     <h2 class="text-lg font-bold text-gray-900 tracking-tight">Orders Table</h2>
                     
@@ -83,10 +91,11 @@
                     </div>
                 </form>   
 
-                <!-- Bulk Selection Alert Strip -->
-                <div id="bulk-actions-bar" class="hidden mb-3 p-2 bg-slate-50 border border-slate-200 rounded-lg flex items-center justify-between text-xs animate-fade-in">
+                <!-- Enhanced Bulk Selection Action Bar -->
+                <div id="bulk-actions-bar" class="hidden mb-3 p-2 bg-slate-50 border border-slate-200 rounded-lg flex items-center justify-between text-xs animate-fade-in shadow-sm">
                     <span class="text-gray-700 font-semibold pl-2"><i class="fas fa-info-circle text-[#1e3d92] mr-1"></i> <span id="selected-count">0</span> orders selected</span>
                     <div class="flex gap-2">
+                        <button onclick="submitBulkAction('ERP Push')" class="bg-[#1e3d92] text-white px-2.5 py-1 rounded font-medium hover:bg-[#162d6d]">Push to ERP</button>
                         <button onclick="submitBulkAction('Shipped')" class="bg-white border border-gray-200 px-2.5 py-1 rounded text-gray-700 font-medium hover:bg-gray-50">Mark Shipped</button>
                         <button onclick="submitBulkAction('Cancelled')" class="bg-white border border-red-200 px-2.5 py-1 rounded text-red-600 font-medium hover:bg-red-50">Cancel Selected</button>
                     </div>
@@ -99,57 +108,149 @@
                             <tr>
                                 <th class="p-2.5 w-10 text-center"><input type="checkbox" id="select-all-orders" class="rounded border-gray-300 accent-[#1e3d92] cursor-pointer" onclick="toggleSelectAll(this)"></th>
                                 <th class="p-2.5 font-semibold text-center w-24">Order ID</th>
-                                <th class="p-2.5 font-semibold text-center w-20">Quantity</th>
+                                <th class="p-2.5 font-semibold text-center w-28">Channel</th>
                                 <th class="p-3 font-semibold">Customer</th>
-                                <th class="p-3 font-semibold">Date & Time</th>
+                                <th class="p-3 font-semibold">Date &amp; Time</th>
                                 <th class="p-3 font-semibold">Total Amount</th>
-                                <th class="p-3 font-semibold">Payment Method</th>
-                                <th class="p-2.5 font-semibold text-center w-28">Status</th>
-                                <th class="p-2.5 font-semibold text-center w-16">Actions</th>
+                                <th class="p-3 font-semibold">Payment &amp; Gateway</th>
+                                <th class="p-2.5 font-semibold text-center w-28">Order Status</th>
+                                <th class="p-2.5 font-semibold text-center w-24">ERP Sync</th>
+                                <th class="p-2.5 font-semibold text-center w-20">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-700 font-medium bg-white">
-                            @foreach ($orders as $order)
+@foreach ($orders as $order)
+@php
+    // Channel
+    $channel = $order->channel ?? 'Web Store';
+    
+    // Safely resolve Payment Method with fallbacks
+    $paymentMethod = $order->transaction_payment_method ?? $order->payment_method ?? 'COD';
+    
+    // Payment Status
+    $txnStatus = strtolower($order->transaction_status ?? '');
+    $isPaid = in_array($txnStatus, ['verified', 'paid', 'success', 'completed']);
+    
+    $paymentStatus = $isPaid 
+        ? 'Paid' 
+        : ($order->status === 'Cancelled' ? 'Refunded' : 'Pending Gateway');
+    
+    // ERP Sync status
+    $erpStatus = $order->erp_sync_status ?? ($order->status === 'Cancelled' ? 'Sync Failed' : 'Synced');
+@endphp
                             <tr class="border-b border-gray-200 last:border-b-0 hover:bg-slate-50/70 transition-colors">
                                 <td class="p-2.5 text-center">
                                     <input type="checkbox" value="{{ $order->order_code }}" class="order-checkbox rounded border-gray-300 accent-[#1e3d92] cursor-pointer" onclick="updateBulkBarStatus()">
                                 </td>
+                                
+                                <!-- Order ID -->
                                 <td class="p-2.5 text-center text-gray-900 font-mono font-normal">
                                     <a href="/orders/{{ urlencode($order->order_code) }}" class="text-[#1e3d92] font-bold hover:underline inline-flex items-center gap-1">
                                         {{ $order->order_code }}
-                                        <i class="fas fa-external-link-alt text-[9px] opacity-50"></i>
                                     </a>
                                 </td>
-                                <td class="p-2.5 text-center text-gray-900 font-bold">{{ $order->qty }}</td>
-                                <td class="p-3 text-gray-900">{{ $order->customer_name }}</td>
-                                <td class="p-3 text-gray-500">{{ \Carbon\Carbon::parse($order->order_date)->format('M d, g:i A') }}</td>
-                                <td class="p-3 font-bold text-gray-900">₱{{ number_format($order->total_amount, 2) }}</td>
-                                <td class="p-3 text-gray-600">{{ $order->payment_method }}</td>
+
+                                <!-- Channel / Storefront Origin -->
                                 <td class="p-2.5 text-center">
-                                    @if($order->status === 'Shipped')
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                        @if($channel === 'Shopify')
+                                            <i class="fab fa-shopify text-emerald-600"></i>
+                                        @elseif($channel === 'WooCommerce')
+                                            <i class="fab fa-wordpress text-blue-600"></i>
+                                        @else
+                                            <i class="fas fa-globe text-indigo-600"></i>
+                                        @endif
+                                        {{ $channel }}
+                                    </span>
+                                </td>
+
+                                <!-- Customer -->
+                                <td class="p-3 text-gray-900">
+                                    <div class="font-semibold">{{ $order->customer_name }}</div>
+                                    <div class="text-[10px] text-gray-400 font-mono">Qty: {{ $order->qty }} items</div>
+                                </td>
+
+                                <!-- Date & Time -->
+                                <td class="p-3 text-gray-500 whitespace-nowrap">{{ \Carbon\Carbon::parse($order->order_date)->format('M d, g:i A') }}</td>
+
+                                <!-- Total Amount -->
+                                <td class="p-3 font-bold text-gray-900 whitespace-nowrap">₱{{ number_format($order->total_amount, 2) }}</td>
+
+                                <!-- Payment & Gateway Status -->
+                                <td class="p-3 text-gray-600">
+                                    <div class="font-semibold text-gray-800">{{ $paymentMethod }}</div>
+                                    @if($paymentStatus === 'Paid')
+                                        <span class="inline-block px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-100 text-emerald-800">Paid</span>
+                                    @elseif($paymentStatus === 'Refunded')
+                                        <span class="inline-block px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-100 text-purple-800">Refunded</span>
+                                    @else
+                                        <span class="inline-block px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-100 text-amber-800">Pending Gateway</span>
+                                    @endif
+                                </td>
+
+                                <!-- Extended Pipeline Order Status -->
+                                <td class="p-2.5 text-center">
+                                    @if($order->status === 'Shipped' || $order->status === 'In Transit')
                                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-[#00c49f] border border-emerald-100/50">Shipped</span>
-                                    @elseif($order->status === 'Cancelled')
+                                    @elseif($order->status === 'Delivered' || $order->status === 'Completed')
+                                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-blue-600 border border-blue-100">Delivered</span>
+                                    @elseif($order->status === 'Processing' || $order->status === 'Packing')
+                                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">Processing</span>
+                                    @elseif($order->status === 'Cancelled' || $order->status === 'Returned')
                                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-50 text-[#ff4d4d] border border-red-100/50">Cancelled</span>
                                     @else
                                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-[#fca311] border border-amber-100/50">Pending</span>
                                     @endif
                                 </td>
+
+                                <!-- ERP Sync Status Indicator -->
+                                <td class="p-2.5 text-center">
+                                    @if($erpStatus === 'Synced')
+                                        <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200" title="Synced with ERP Ledger">
+                                            <i class="fas fa-check-circle"></i> Synced
+                                        </span>
+                                    @elseif($erpStatus === 'Sync Failed')
+                                        <span class="inline-flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200" title="Sync error: retry manual push">
+                                            <i class="fas fa-times-circle"></i> Failed
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                                            <i class="fas fa-spinner animate-spin"></i> Pending
+                                        </span>
+                                    @endif
+                                </td>
+
+                                <!-- Direct Action Links -->
                                 <td class="p-2.5 text-center relative">
-                                    <div class="inline-block text-left dropdown">
-                                        <button onclick="toggleDropdown(event, '{{ $order->order_code }}')" class="text-gray-400 hover:text-gray-600 p-1 focus:outline-none cursor-pointer">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </button>
-                                        <div id="dropdown-{{ $order->order_code }}" class="hidden absolute right-0 mt-1 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-30 py-1 text-left">
-                                            <button onclick="alert('Viewing Invoice for {{ $order->order_code }}')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
-                                                <i class="fas fa-file-invoice text-gray-400 w-4"></i> View Invoice
+                                    <div class="flex items-center justify-center gap-2">
+                                        <!-- Quick View Icon -->
+                                        <a href="/orders/{{ urlencode($order->order_code) }}" class="text-gray-400 hover:text-[#1e3d92] transition-colors" title="View Order Details">
+                                            <i class="fas fa-eye text-sm"></i>
+                                        </a>
+
+                                        <!-- Extended Dropdown Menu -->
+                                        <div class="inline-block text-left dropdown">
+                                            <button onclick="toggleDropdown(event, '{{ $order->order_code }}')" class="text-gray-400 hover:text-gray-600 p-1 focus:outline-none cursor-pointer">
+                                                <i class="fas fa-ellipsis-v"></i>
                                             </button>
-                                            <button onclick="alert('Printing Packing Slip for {{ $order->order_code }}')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
-                                                <i class="fas fa-print text-gray-400 w-4"></i> Print Packing Slip
-                                            </button>
-                                            <div class="border-t border-gray-100 my-1"></div>
-                                            <button onclick="alert('Raw Gateway Sync Payload:\n\n' + JSON.stringify({order_id: '{{ $order->order_code }}', source: 'E-Commerce API', status: '{{ $order->status }}', sync_state: 'Verified'}, null, 4))" class="w-full text-left px-3 py-2 text-xs text-gray-500 hover:bg-slate-50 flex items-center gap-2">
-                                                <i class="fas fa-code text-gray-400 w-4"></i> View Sync Payload
-                                            </button>
+                                            <div id="dropdown-{{ $order->order_code }}" class="hidden absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-30 py-1 text-left">
+                                                <a href="/orders/{{ urlencode($order->order_code) }}" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
+                                                    <i class="fas fa-eye text-gray-400 w-4"></i> Order Details
+                                                </a>
+                                                <button onclick="alert('Retrying manual ERP sync for {{ $order->order_code }}...')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
+                                                    <i class="fas fa-sync-alt text-gray-400 w-4"></i> Retry Sync to ERP
+                                                </button>
+                                                <button onclick="alert('Viewing Invoice for {{ $order->order_code }}')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
+                                                    <i class="fas fa-file-invoice text-gray-400 w-4"></i> View Invoice
+                                                </button>
+                                                <button onclick="alert('Printing Packing Slip for {{ $order->order_code }}')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-slate-50 flex items-center gap-2">
+                                                    <i class="fas fa-print text-gray-400 w-4"></i> Print Packing Slip
+                                                </button>
+                                                <div class="border-t border-gray-100 my-1"></div>
+                                                <button onclick="alert('Raw Gateway Sync Payload:\n\n' + JSON.stringify({order_id: '{{ $order->order_code }}', source: '{{ $channel }}', status: '{{ $order->status }}', payment_status: '{{ $paymentStatus }}', sync_state: '{{ $erpStatus }}'}, null, 4))" class="w-full text-left px-3 py-2 text-xs text-gray-500 hover:bg-slate-50 flex items-center gap-2">
+                                                    <i class="fas fa-code text-gray-400 w-4"></i> View Sync Payload
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
@@ -175,8 +276,9 @@
         <!-- Right Side Activities Stream -->
         <div class="lg:col-span-1 flex flex-col gap-4">
             <div class="bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.01)] border border-gray-200 flex flex-col divide-y divide-gray-100">
-                <div class="p-4 text-center bg-slate-50/50 rounded-t-xl">
+                <div class="p-4 text-center bg-slate-50/50 rounded-t-xl flex items-center justify-between">
                     <h3 class="text-sm font-bold text-gray-900 tracking-tight">Recent Activity Log</h3>
+                    <i class="fas fa-list-alt text-xs text-gray-400"></i>
                 </div>
                 
                 <div class="p-4 flex flex-col gap-4 max-h-[450px] overflow-y-auto bg-white rounded-b-xl">
@@ -217,7 +319,6 @@
     <button onclick="closeMetadataLogPage()" class="absolute top-6 right-10 text-4xl text-gray-900 hover:text-gray-600 font-light cursor-pointer leading-none">&times;</button>
     <div class="w-full max-w-7xl mx-auto flex flex-col gap-6">
         <div class="text-left">
-            <!-- FIX 1: Updated Total Count calculation context targeting complete unpaginated pool -->
             <h2 class="text-[15px] font-extrabold text-gray-900 tracking-tight leading-relaxed uppercase">
                 SYSTEM AUDIT TRAIL: Complete Order Modification History Ledger | Total Sync Pool: {{ $allFilteredOrders->count() }} Records
             </h2>
@@ -230,21 +331,20 @@
                         <th class="p-2.5 border-r border-gray-300 w-28">Order ID</th>
                         <th class="p-2.5 border-r border-gray-300 w-20">Quantity</th>
                         <th class="p-2.5 border-r border-gray-300">Customer</th>
-                        <th class="p-2.5 border-r border-gray-300">Date & Time</th>
+                        <th class="p-2.5 border-r border-gray-300">Date &amp; Time</th>
                         <th class="p-2.5 border-r border-gray-300">Total Amount</th>
                         <th class="p-2.5 border-r border-gray-300">Payment Method</th>
                         <th class="p-2.5">Status</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-300 text-gray-700 text-center font-medium">
-                    <!-- Iterating the complete unpaginated list inside overlay grid -->
                     @foreach ($allFilteredOrders as $order)
                     <tr>
                         <td class="p-2.5 border-r border-gray-300 font-mono">{{ $order->order_code }}</td>
                         <td class="p-2.5 border-r border-gray-300">{{ $order->qty }}</td>
                         <td class="p-2.5 border-r border-gray-300 text-left pl-4">{{ $order->customer_name }}</td>
                         <td class="p-2.5 border-r border-gray-300 font-mono text-gray-500">{{ \Carbon\Carbon::parse($order->order_date)->format('M d, Y g:i A') }}</td>
-                        <td class="p-2.5 border-r border-gray-300 font-semibold">{{ number_format($order->total_amount, 2) }}</td>
+                        <td class="p-2.5 border-r border-gray-300 font-semibold">₱{{ number_format($order->total_amount, 2) }}</td>
                         <td class="p-2.5 border-r border-gray-300">{{ $order->payment_method }}</td>
                         <td class="p-2.5">{{ $order->status }}</td>
                     </tr>
@@ -263,7 +363,7 @@ function submitBulkAction(status) {
     const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
 
     if (selectedIds.length === 0) return;
-    if (!confirm(`Are you sure you want to mark ${selectedIds.length} orders as ${status}?`)) return;
+    if (!confirm(`Are you sure you want to perform '${status}' on ${selectedIds.length} orders?`)) return;
 
     const form = document.createElement('form');
     form.method = 'POST';
@@ -322,7 +422,7 @@ function updateBulkBarStatus() {
     const masterCb = document.getElementById('select-all-orders');
 
     if(masterCb) {
-        masterCb.checked = checkedCount === checkboxes.length;
+        masterCb.checked = checkedCount === checkboxes.length && checkboxes.length > 0;
     }
 
     if (checkedCount > 0) {
@@ -341,7 +441,6 @@ function executeProfessionalExport() {
         ["Order ID", "Quantity", "Customer", "Date & Time", "Total Amount", "Payment Method", "Status"]
     ];
     
-    // FIX 2: Target clean array structure passed from unpaginated collection context directly
     const records = @json($allFilteredOrders);
 
     records.forEach(o => {
@@ -382,7 +481,6 @@ function openMetadataLogPage() {
     document.body.classList.add('overflow-hidden');
 }
 
-// Ensure overlay list renders full unpaginated details context cleanly
 function closeMetadataLogPage() {
     document.getElementById('metadata-overlay').classList.replace('flex', 'hidden');
     document.body.classList.remove('overflow-hidden');

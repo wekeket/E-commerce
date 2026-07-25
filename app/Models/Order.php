@@ -16,7 +16,11 @@ class Order extends Model
         'payment_method',
         'status',
     ];
-
+    
+public function transaction()
+{
+    return $this->hasOne(CustomerTransaction::class);
+}
     public function customer()
     {
         return $this->belongsTo(Customer::class);
