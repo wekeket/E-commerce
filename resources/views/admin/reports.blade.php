@@ -5,6 +5,7 @@
 <title>OG TECH — Reports</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <style>
@@ -28,87 +29,26 @@
 
     /* ---------- SIDEBAR ---------- */
     .sidebar{
-        width:250px;
-        background:var(--navy);
-        color:#fff;
-        display:flex;
-        flex-direction:column;
-        padding:24px 20px;
-        flex-shrink:0;
+            background: linear-gradient(
+                180deg,
+                #213a8f 0%,
+                #13235e 100%
+            );
     }
-    .brand{
-        display:flex;
-        align-items:center;
-        gap:8px;
-        font-weight:800;
-        font-size:19px;
-        letter-spacing:0.5px;
-        margin-bottom:26px;
+    .active-menu{
+            background:#23d18b;
     }
-    .brand .g-icon{
-        width:30px;height:30px;border-radius:50%;
-        border:2px solid var(--green);
-        display:flex;align-items:center;justify-content:center;
-        font-size:14px;font-weight:800;color:var(--green);
-        flex-shrink:0;
+    .icon-box{
+            width:32px;
+            height:32px;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:15px;
+            flex-shrink:0;
     }
-    .sidebar-search{
-        background:rgba(255,255,255,0.08);
-        border:1px solid rgba(255,255,255,0.15);
-        border-radius:999px;
-        padding:9px 16px;
-        font-size:12px;
-        color:#cfd3e6;
-        margin-bottom:26px;
-        width:100%;
-    }
-    .sidebar-search::placeholder{ color:#cfd3e6; }
-    .menu-label{
-        font-size:11px;
-        text-transform:uppercase;
-        letter-spacing:1px;
-        color:var(--green);
-        margin-bottom:14px;
-        font-weight:700;
-    }
-    nav.menu{ display:flex; flex-direction:column; gap:6px; flex:1; }
-    .nav-btn{
-        display:flex;
-        align-items:center;
-        gap:12px;
-        background:transparent;
-        border:none;
-        color:#c7cbe6;
-        font-family:inherit;
-        font-size:13.5px;
-        font-weight:500;
-        text-align:left;
-        padding:9px 12px;
-        border-radius:12px;
-        cursor:pointer;
-        text-decoration:none;
-        transition:.15s;
-    }
-    .nav-btn:hover{ background:rgba(255,255,255,0.06); color:#fff; }
-    .nav-btn.active{ background:var(--green); color:#fff; font-weight:600; }
-    .nav-btn.disabled{ opacity:.55; cursor:not-allowed; pointer-events:none; }
-    .nav-btn .icon-box{
-        width:32px;
-        height:32px;
-        border-radius:10px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:15px;
-        flex-shrink:0;
-    }
-    .nav-btn.active .icon-box{ background:rgba(255,255,255,0.2); }
-    .icon-blue{ background:rgba(58,160,232,0.2); }
-    .icon-orange{ background:rgba(241,138,74,0.2); }
-    .icon-yellow{ background:rgba(234,181,74,0.2); }
-    .icon-slate{ background:rgba(139,147,192,0.2); }
-    .icon-green{ background:rgba(27,196,155,0.2); }
-
+    
     /* ---------- MAIN ---------- */
     .main{ flex:1; display:flex; flex-direction:column; min-width:0; }
     .topbar{
@@ -170,35 +110,77 @@
 <body>
 
 <!-- ================= SIDEBAR ================= -->
-<aside class="sidebar">
-    <div class="brand"><span class="g-icon">G</span> OG TECH</div>
-    <input class="sidebar-search" type="text" placeholder="Search">
+<aside class="sidebar w-64 text-white flex flex-col p-6">
 
-    <div class="menu-label">Main Menu</div>
-    <nav class="menu">
-        <a class="nav-btn" href="{{ route('dashboard') }}">
-            <span class="icon-box icon-blue">🔲</span> Dashboard
-        </a>
-        <a class="nav-btn" title="Not wired up yet">
-            <span class="icon-box icon-slate">📦</span> Inventory
-        </a>
-        <a class="nav-btn" title="Not wired up yet">
-            <span class="icon-box icon-orange">🛒</span> Orders
-        </a>
-        <a class="nav-btn" title="Not wired up yet">
-            <span class="icon-box icon-yellow">🏷️</span> Products
-        </a>
-        <a class="nav-btn" title="Not wired up yet">
-            <span class="icon-box icon-slate">💳</span> Customers &amp; Payments
-        </a>
-        <a class="nav-btn active" href="{{ route('reports') }}">
-            <span class="icon-box">📊</span> Reports
-        </a>
-        <a class="nav-btn" title="Not wired up yet">
-            <span class="icon-box icon-slate">⚙️</span> Settings
-        </a>
-    </nav>
-</aside>
+        <div class="flex items-center gap-2 mb-8">
+            <div
+                class="w-9 h-9 rounded-full border-2 border-emerald-400 flex items-center justify-center text-emerald-400 font-bold text-lg">
+                G
+            </div>
+
+            <div class="font-extrabold text-xl tracking-wide">
+                OG TECH
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <input
+                type="text"
+                placeholder="Search"
+                class="w-full rounded-full bg-white/10 border border-white/20 placeholder-gray-300 text-white text-sm px-4 py-2 focus:outline-none focus:bg-white/20">
+        </div>
+
+        <h3 class="text-xs font-bold text-emerald-400 tracking-widest uppercase mb-4">
+            Main Menu
+        </h3>
+
+        <nav class="space-y-2">
+
+            <a href="{{ route('dashboard') }}"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold">
+                <span class="icon-box bg-white/20">🔲</span>
+                Dashboard
+            </a>
+
+            <a href="{{ route('inventory.index') }}"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-blue-400/20">📦</span>
+                Inventory
+            </a>
+
+            <a href="{{ route('orders.index') }}"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-orange-400/20">🛒</span>
+                Orders
+            </a>
+
+            <a href="{{ route('products.index') }}"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-yellow-400/20">🏷️</span>
+                Products
+            </a>
+
+            <a href="{{ route('customers.index') }}"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-slate-400/20">💳</span>
+                Customers &amp; Payments
+            </a>
+
+            <a href="{{ route('reports') }}"
+               class="menu-item active-menu flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-emerald-400/20">📊</span>
+                Reports
+            </a>
+
+            <a href="#"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-slate-400/20">⚙️</span>
+                Settings
+            </a>
+
+        </nav>
+
+    </aside>
 
 <!-- ================= MAIN ================= -->
 <div class="main">
@@ -322,6 +304,22 @@ new Chart(topProductsCtx, {
         }
     }
 });
+
+const menuItems = document.querySelectorAll('.menu-item');
+
+    menuItems.forEach(item => {
+
+        item.addEventListener('click', function(){
+
+            menuItems.forEach(m=>{
+                m.classList.remove('active-menu');
+            });
+
+            this.classList.add('active-menu');
+
+        });
+
+    });
 </script>
 </body>
 </html>

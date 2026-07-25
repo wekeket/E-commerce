@@ -11,6 +11,7 @@
     <style>
         body{
             background:#dcdcdc;
+            font-family:'Poppins', sans-serif;
         }
 
         .sidebar{
