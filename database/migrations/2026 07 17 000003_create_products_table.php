@@ -10,21 +10,37 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+
             $table->string('sku', 50)->unique();
+
             $table->string('product_name', 150);
+
             $table->string('brand', 100)->nullable();
+
             $table->string('category', 100)->nullable();
+
             $table->text('description')->nullable();
+
             $table->foreignId('category_id')
                   ->nullable()
                   ->constrained('categories')
                   ->nullOnDelete();
+
             $table->decimal('price', 10, 2)->default(0);
-            $table->decimal('cost', 10, 2)->nullable()->default(0);
+
+            $table->decimal('cost', 10, 2)
+                  ->nullable()
+                  ->default(0);
+
             $table->integer('stock_quantity')->default(0);
-            $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->string('image_url', 255)->nullable();
-            $table->timestamp('created_at')->nullable()->useCurrent();
+
+            $table->enum('status', ['active', 'inactive'])
+                  ->default('active');
+
+            // Only created_at
+            $table->timestamp('created_at')
+                  ->nullable()
+                  ->useCurrent();
         });
     }
 
