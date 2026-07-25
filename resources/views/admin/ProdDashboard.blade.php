@@ -15,113 +15,116 @@
         body{
             font-family:Poppins,sans-serif;
             background:#eef2f7;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar{
+            background: linear-gradient(
+                180deg,
+                #213a8f 0%,
+                #13235e 100%
+            );
+        }
+
+        .active-menu{
+            background:#23d18b;
+        }
+
+        .icon-box{
+            width:32px;
+            height:32px;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:15px;
+            flex-shrink:0;
         }
     </style>
 
 </head>
 <body>
 
-<div class="min-h-screen">
+<div class="flex min-h-screen">
 
     <!-- Sidebar -->
 
-    <aside
-    id="sidebar"
-    class="fixed top-0 left-0 h-screen w-64 bg-[#192b8d] text-white
-           transform -translate-x-full
-           transition-transform duration-300 ease-in-out
-           z-50">
+    <aside class="sidebar fixed top-0 left-0 h-screen w-64 text-white flex flex-col p-6">
 
-        <div class="p-6">
-
-            <div class="flex items-center gap-2 mb-6">
-
-                <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center font-bold text-xl">
-                    G
-                </div>
-
-                <div>
-
-                    <h2 class="font-bold text-2xl">OG</h2>
-
-                </div>
-
-                <span class="font-semibold tracking-wide">
-                    TECH
-                </span>
-
+        <div class="flex items-center gap-2 mb-8">
+            <div
+                class="w-9 h-9 rounded-full border-2 border-emerald-400 flex items-center justify-center text-emerald-400 font-bold text-lg">
+                G
             </div>
 
-            <input
-            type="text"
-            placeholder="Search"
-            class="w-full rounded-full px-4 py-2 text-black text-sm">
-
+            <div class="font-extrabold text-xl tracking-wide">
+                OG TECH
+            </div>
         </div>
 
-        <nav class="flex-1">
+        <div class="mb-8">
+            <input
+                type="text"
+                placeholder="Search"
+                class="w-full rounded-full bg-white/10 border border-white/20 placeholder-gray-300 text-white text-sm px-4 py-2 focus:outline-none focus:bg-white/20">
+        </div>
 
-            <ul class="space-y-2 px-4">
+        <h3 class="text-xs font-bold text-emerald-400 tracking-widest uppercase mb-4">
+            Main Menu
+        </h3>
 
-                <li>
-                    <a href="{{ route('dashboard') }}" class="block py-3 px-4 rounded-lg hover:bg-blue-800">
-                        <span class="menu-text">Dashboard</span>
-                    </a>
-                </li>
+        <nav class="space-y-2">
 
-                <li>
-                    <a href="{{ route('inventory.index') }}" class="block py-3 px-4 rounded-lg hover:bg-blue-800">
-                        <span class="menu-text">Inventory</span>
-                    </a>
-                </li>
+            <a href="{{ route('dashboard') }}"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold">
+                <span class="icon-box bg-white/20">🔲</span>
+                Dashboard
+            </a>
 
-                <li>
-                    <a href="{{ route('orders.index') }}"
+            <a href="{{ route('inventory.index') }}"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-blue-400/20">📦</span>
+                Inventory
+            </a>
+
+            <a href="{{ route('orders.index') }}"
                class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
                 <span class="icon-box bg-orange-400/20">🛒</span>
                 Orders
             </a>
-                </li>
 
-                <li>
-                    <a href="{{ route('products.index') }}" class="block py-3 px-4 rounded-lg bg-green-500">
-                        <span class="menu-text">Products</span>
-                    </a>
-                </li>
+            <a href="{{ route('products.index') }}"
+               class="menu-item active-menu flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-yellow-400/20">🏷️</span>
+                Products
+            </a>
 
-                <li>
-                    <a href="{{ route('customers.index') }}" class="block py-3 px-4 rounded-lg hover:bg-blue-800">
-                        <span class="menu-text">Customers & Payments</span>
-                    </a>
-                </li>
+            <a href="{{ route('customers.index') }}"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-slate-400/20">💳</span>
+                Customers &amp; Payments
+            </a>
 
-                <li>
-                    <a href="{{ route('reports') }}" class="block py-3 px-4 rounded-lg hover:bg-blue-800">
-                        <span class="menu-text">Reports</span>
-                    </a>
-                </li>
+            <a href="{{ route('reports') }}"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-emerald-400/20">📊</span>
+                Reports
+            </a>
 
-                <li>
-                    <a href="#" class="block py-3 px-4 rounded-lg hover:bg-blue-800">
-                        <span class="menu-text">Settings</span>
-                    </a>
-                </li>
-
-            </ul>
+            <a href="#"
+               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
+                <span class="icon-box bg-slate-400/20">⚙️</span>
+                Settings
+            </a>
 
         </nav>
 
     </aside>
 
-    <div
-    id="overlay"
-    class="fixed inset-0 bg-black/40 hidden z-40">
-    </div>
-
 
     <!-- Main -->
 
-    <main id="mainContent" class="min-h-screen overflow-auto">
+    <main id="mainContent" class="ml-64 flex-1">
 
         <!-- Navbar -->
 
@@ -285,8 +288,8 @@
                 <tr class="border-b hover:bg-gray-50">
 
                     <td class="py-4">{{ $product->id }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->category_id }}</td>
+                    <td>{{ $product->product_name }}</td>
+                    <td>{{ $product->category }}</td>
                     <td>₱{{ number_format($product->price, 2) }}</td>
                     <td>{{ $product->stock_quantity }}</td>
                     <td>{{ $product->status }}</td>
@@ -399,21 +402,6 @@
 
     rows.forEach(row => tableBody.appendChild(row));
 
-});
-
-// Menu Function
-const menuToggle = document.getElementById("menuToggle");
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("overlay");
-
-menuToggle.addEventListener("click", () => {
-    sidebar.classList.toggle("-translate-x-full");
-    overlay.classList.toggle("hidden");
-});
-
-overlay.addEventListener("click", () => {
-    sidebar.classList.add("-translate-x-full");
-    overlay.classList.add("hidden");
 });
 </script>
 

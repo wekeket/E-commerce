@@ -10,6 +10,7 @@
     <style>
         body{
             background:#f4f5f8;
+            font-family:'Poppins', sans-serif;
         }
 
         .sidebar{

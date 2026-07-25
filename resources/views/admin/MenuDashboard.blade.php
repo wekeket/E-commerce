@@ -352,7 +352,7 @@
                             @foreach($topProducts as $i => $product)
                                 <li class="flex items-center gap-2">
                                     <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:{{ ['#213a8f', '#23d18b', '#f59e0b', '#ef4444'][$i % 4] }}"></span>
-                                    {{ $product->name }}
+                                    {{ $product->product_name }}
                                     <span class="text-gray-400 ml-auto">{{ $product->units_sold }} sold</span>
                                 </li>
                             @endforeach

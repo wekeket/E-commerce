@@ -8,11 +8,14 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         [x-cloak] { display: none !important; }
+        body {
+            font-family:'Poppins', sans-serif;
+        }
     </style>
 </head>
-<body class="bg-[#eaeef3] font-sans antialiased text-gray-800">
+<body>
     
-    <div x-data="{ sidebarOpen: true }" class="flex h-screen overflow-hidden">
+    <div class="flex min-h-screen">
         
         <aside :class="sidebarOpen ? 'w-[260px]' : 'w-20'" class="bg-gradient-to-b from-[#1e3a8a] via-[#0f172a] to-[#070a13] text-slate-300 transition-all duration-300 flex flex-col z-20 shadow-xl">
             

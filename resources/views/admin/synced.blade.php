@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-<div class="flex-1 p-6 overflow-y-auto bg-[#f8fafc]">
+<div>
     <!-- View Structural Header -->
     <header class="mb-5 flex items-center gap-3">
         <h1 class="text-[28px] font-bold text-[#0a2973] tracking-tight">Order Management</h1>

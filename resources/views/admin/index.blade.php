@@ -36,6 +36,9 @@ foreach ($products as $product) {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+    body {
+        font-family:'Poppins', sans-serif;
+    }
     .sidebar{
         background: linear-gradient(
             180deg,
@@ -329,7 +332,7 @@ foreach ($products as $product) {
     </td>
 
     <td class="p-3 font-semibold">
-        {{ $item->name }}
+        {{ $item->product_name }}
     </td>
 
     <td class="p-3">
@@ -337,7 +340,7 @@ foreach ($products as $product) {
     </td>
 
     <td class="p-3">
-        {{ $item->category_id }}
+        {{ $item->category }}
     </td>
 
     <td class="p-3 text-center font-semibold">
