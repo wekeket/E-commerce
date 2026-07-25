@@ -218,6 +218,60 @@
                 <div class="sub">Total booked vs. verified revenue (customer_transactions)</div>
                 <canvas id="storeRevenueChart" height="300"></canvas>
             </div>
+
+            <div class="report-panel">
+                <h3>Order Status Breakdown</h3>
+                <div class="sub">Distribution of orders by current status</div>
+                <canvas id="orderStatusChart" height="300"></canvas>
+            </div>
+
+            <div class="report-panel">
+                <h3>Cancelled &amp; Refunded Value</h3>
+                <div class="sub">Revenue lost to cancellations and refunds</div>
+                <div style="display:flex; gap:16px; margin-top:24px;">
+                    <div style="flex:1; background:#fff5f5; border:1px solid #f5c2c2; border-radius:10px; padding:16px; text-align:center;">
+                        <div style="font-size:11px; color:var(--text-muted); margin-bottom:6px;">Cancelled Orders</div>
+                        <div style="font-size:22px; font-weight:700; color:#e05a5a;">₱{{ number_format($cancelledValue, 2) }}</div>
+                    </div>
+                    <div style="flex:1; background:#fff8ec; border:1px solid #f0dba8; border-radius:10px; padding:16px; text-align:center;">
+                        <div style="font-size:11px; color:var(--text-muted); margin-bottom:6px;">Refunded Payments</div>
+                        <div style="font-size:22px; font-weight:700; color:#d9a441;">₱{{ number_format($refundedValue, 2) }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-panel">
+                <h3>Low Stock Alert</h3>
+                <div class="sub">Products below {{ $lowStockThreshold }} units</div>
+                <div style="max-height:260px; overflow-y:auto; margin-top:12px;">
+                    <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                        <thead>
+                            <tr style="text-align:left; color:var(--text-muted); border-bottom:1px solid var(--border);">
+                                <th style="padding:6px 4px;">Product</th>
+                                <th style="padding:6px 4px;">SKU</th>
+                                <th style="padding:6px 4px; text-align:right;">Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($lowStockProducts as $product)
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:6px 4px;">{{ $product->product_name }}</td>
+                                    <td style="padding:6px 4px; color:var(--text-muted);">{{ $product->sku }}</td>
+                                    <td style="padding:6px 4px; text-align:right; font-weight:600; color:#e05a5a;">{{ $product->stock_quantity }}</td>
+                                </tr>
+                            @empty
+                                <tr><td colspan="3" style="padding:12px 4px; color:var(--text-muted); text-align:center;">All stock levels healthy 🎉</td></tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="report-panel">
+                <h3>Inventory Value by Category</h3>
+                <div class="sub">Stock quantity × cost, grouped by category</div>
+                <canvas id="inventoryValueChart" height="300"></canvas>
+            </div>
         </div>
     </div>
 </div>
@@ -245,6 +299,16 @@ const storeRevenueData = {
     labels: {!! json_encode($storeLabels) !!},
     totalBooked: {!! json_encode($storeTotalBooked) !!},
     verifiedRevenue: {!! json_encode($storeVerifiedRevenue) !!}
+};
+
+const orderStatusData = {
+    labels: {!! json_encode($orderStatusLabels) !!},
+    values: {!! json_encode($orderStatusValues) !!}
+};
+
+const inventoryValueData = {
+    labels: {!! json_encode($inventoryValueLabels) !!},
+    values: {!! json_encode($inventoryValueAmounts) !!}
 };
 
 const ctx = document.getElementById('revenueChart');
@@ -331,6 +395,52 @@ new Chart(storeRevenueCtx, {
     options: {
         responsive: true,
         plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } },
+        scales: {
+            y: {
+                grid: { color: '#eef0f5' },
+                ticks: { font: { size: 10 }, callback: function(value) { return '₱' + value.toLocaleString(); } }
+            },
+            x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+        }
+    }
+});
+
+const orderStatusCtx = document.getElementById('orderStatusChart');
+new Chart(orderStatusCtx, {
+    type: 'doughnut',
+    data: {
+        labels: orderStatusData.labels,
+        datasets: [{
+            data: orderStatusData.values,
+            backgroundColor: ['#eab54a', '#3aa0e8', '#1BC49B', '#f16a6a'],
+            borderColor: '#ffffff',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10.5 }, padding: 12 } }
+        }
+    }
+});
+
+const inventoryValueCtx = document.getElementById('inventoryValueChart');
+new Chart(inventoryValueCtx, {
+    type: 'bar',
+    data: {
+        labels: inventoryValueData.labels,
+        datasets: [{
+            label: 'Inventory Value',
+            data: inventoryValueData.values,
+            backgroundColor: '#8b6be0',
+            borderRadius: 4,
+            barThickness: 30
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
         scales: {
             y: {
                 grid: { color: '#eef0f5' },

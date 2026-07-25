@@ -124,6 +124,50 @@ class DashboardController extends Controller
                 ->get()
             : collect();
 
+        // ---- Operational: Order Status Breakdown ----
+        $orderStatusRows = Schema::hasTable('orders')
+            ? DB::table('orders')
+                ->select('status', DB::raw('COUNT(*) as cnt'))
+                ->groupBy('status')
+                ->get()
+            : collect();
+
+        $orderStatusLabels = $orderStatusRows->pluck('status');
+        $orderStatusValues = $orderStatusRows->pluck('cnt');
+
+        // ---- Operational: Cancelled & Refunded Value ----
+        $cancelledValue = Schema::hasTable('orders')
+            ? DB::table('orders')->where('status', 'Cancelled')->sum('total_amount')
+            : 0;
+
+        $refundedValue = Schema::hasTable('payments')
+            ? DB::table('payments')->where('status', 'Refunded')->sum('amount')
+            : 0;
+
+        // ---- Inventory: Low Stock Alert (threshold = 10 units) ----
+        $lowStockThreshold = 10;
+
+        $lowStockProducts = Schema::hasTable('products')
+            ? DB::table('products')
+                ->where('stock_quantity', '<', $lowStockThreshold)
+                ->orderBy('stock_quantity')
+                ->select('product_name', 'sku', 'category', 'stock_quantity')
+                ->get()
+            : collect();
+
+        // ---- Inventory: Inventory Value by Category ----
+        $inventoryValueRows = Schema::hasTable('products') && Schema::hasTable('categories')
+            ? DB::table('products')
+                ->join('categories', 'products.category_id', '=', 'categories.id')
+                ->select('categories.name as category_name', DB::raw('SUM(products.stock_quantity * products.cost) as inventory_value'))
+                ->groupBy('categories.name')
+                ->orderByDesc('inventory_value')
+                ->get()
+            : collect();
+
+        $inventoryValueLabels = $inventoryValueRows->pluck('category_name');
+        $inventoryValueAmounts = $inventoryValueRows->pluck('inventory_value');
+
         return view('admin.reports', [
             'monthLabels'          => $monthLabels,
             'monthlyRevenue'       => $monthlyRevenue,
@@ -135,6 +179,14 @@ class DashboardController extends Controller
             'storeLabels'          => $storeRevenue->pluck('store'),
             'storeTotalBooked'     => $storeRevenue->pluck('total_booked'),
             'storeVerifiedRevenue' => $storeRevenue->pluck('verified_revenue'),
+            'orderStatusLabels'     => $orderStatusLabels,
+            'orderStatusValues'     => $orderStatusValues,
+            'cancelledValue'        => $cancelledValue,
+            'refundedValue'         => $refundedValue,
+            'lowStockProducts'      => $lowStockProducts,
+            'lowStockThreshold'     => $lowStockThreshold,
+            'inventoryValueLabels'  => $inventoryValueLabels,
+            'inventoryValueAmounts' => $inventoryValueAmounts,
         ]);
     }
 }
