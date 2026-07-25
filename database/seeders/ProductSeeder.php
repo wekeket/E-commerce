@@ -26,7 +26,7 @@ class ProductSeeder extends Seeder
         'cost' => 6500.00,
         'stock_quantity' => 25,
         'status' => 'active',
-        'image_url' => 'products/ryzen5-5600.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'CPU-0002',
@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
         'cost' => 7900.00,
         'stock_quantity' => 18,
         'status' => 'active',
-        'image_url' => 'products/i5-12400f.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'GPU-0001',
@@ -52,7 +52,7 @@ class ProductSeeder extends Seeder
         'cost' => 18300.00,
         'stock_quantity' => 12,
         'status' => 'active',
-        'image_url' => 'products/rtx4060.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'GPU-0002',
@@ -65,7 +65,7 @@ class ProductSeeder extends Seeder
         'cost' => 16400.00,
         'stock_quantity' => 10,
         'status' => 'active',
-        'image_url' => 'products/rx7600.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'MB-0001',
@@ -78,7 +78,7 @@ class ProductSeeder extends Seeder
         'cost' => 4700.00,
         'stock_quantity' => 20,
         'status' => 'active',
-        'image_url' => 'products/b550m.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'MB-0002',
@@ -91,7 +91,7 @@ class ProductSeeder extends Seeder
         'cost' => 8100.00,
         'stock_quantity' => 15,
         'status' => 'active',
-        'image_url' => 'products/b760m.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'RAM-0001',
@@ -104,7 +104,7 @@ class ProductSeeder extends Seeder
         'cost' => 2300.00,
         'stock_quantity' => 35,
         'status' => 'active',
-        'image_url' => 'products/lpx16gb.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'RAM-0002',
@@ -117,7 +117,7 @@ class ProductSeeder extends Seeder
         'cost' => 5800.00,
         'stock_quantity' => 14,
         'status' => 'active',
-        'image_url' => 'products/fury32gb.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'SSD-0001',
@@ -130,7 +130,7 @@ class ProductSeeder extends Seeder
         'cost' => 3900.00,
         'stock_quantity' => 22,
         'status' => 'active',
-        'image_url' => 'products/sn770.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'SSD-0002',
@@ -143,7 +143,7 @@ class ProductSeeder extends Seeder
         'cost' => 4550.00,
         'stock_quantity' => 18,
         'status' => 'active',
-        'image_url' => 'products/870evo.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'PSU-0001',
@@ -156,7 +156,7 @@ class ProductSeeder extends Seeder
         'cost' => 3100.00,
         'stock_quantity' => 16,
         'status' => 'active',
-        'image_url' => 'products/cv650.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'PSU-0002',
@@ -169,7 +169,7 @@ class ProductSeeder extends Seeder
         'cost' => 2850.00,
         'stock_quantity' => 21,
         'status' => 'active',
-        'image_url' => 'products/a650bn.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'CASE-0001',
@@ -182,7 +182,7 @@ class ProductSeeder extends Seeder
         'cost' => 3900.00,
         'stock_quantity' => 8,
         'status' => 'active',
-        'image_url' => 'products/h510.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'CASE-0002',
@@ -195,7 +195,7 @@ class ProductSeeder extends Seeder
         'cost' => 2600.00,
         'stock_quantity' => 12,
         'status' => 'active',
-        'image_url' => 'products/cc560.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'COOL-0001',
@@ -208,7 +208,7 @@ class ProductSeeder extends Seeder
         'cost' => 1300.00,
         'stock_quantity' => 24,
         'status' => 'active',
-        'image_url' => 'products/ak400.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'COOL-0002',
@@ -221,7 +221,7 @@ class ProductSeeder extends Seeder
         'cost' => 1950.00,
         'stock_quantity' => 13,
         'status' => 'active',
-        'image_url' => 'products/hyper212.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'GPU-0003',
@@ -234,7 +234,7 @@ class ProductSeeder extends Seeder
         'cost' => 37200.00,
         'stock_quantity' => 5,
         'status' => 'active',
-        'image_url' => 'products/rtx4070super.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'SSD-0003',
@@ -247,7 +247,7 @@ class ProductSeeder extends Seeder
         'cost' => 7900.00,
         'stock_quantity' => 9,
         'status' => 'active',
-        'image_url' => 'products/980pro2tb.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'RAM-0003',
@@ -260,7 +260,7 @@ class ProductSeeder extends Seeder
         'cost' => 6800.00,
         'stock_quantity' => 11,
         'status' => 'active',
-        'image_url' => 'products/tridentz5.jpg',
+        'image_url' => '',
     ],
     [
         'sku' => 'CPU-0003',
@@ -273,7 +273,7 @@ class ProductSeeder extends Seeder
         'cost' => 16500.00,
         'stock_quantity' => 7,
         'status' => 'active',
-        'image_url' => 'products/7700x.jpg',
+        'image_url' => '',
     ],
 ]);
     }
