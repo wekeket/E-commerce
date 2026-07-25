@@ -3,15 +3,16 @@
 @section('content')
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-sm border border-gray-100 mt-10">
     <!-- Back Button -->
-    <a href="/orders/synced" class="text-xs font-semibold text-[#1e3d92] hover:underline flex items-center gap-1 mb-6">
+    <a href="/orders/synced/sync" class="text-xs font-semibold text-[#1e3d92] hover:underline flex items-center gap-1 mb-6">
         <i class="fas fa-arrow-left"></i> Back to Orders Table
     </a>
 
     <!-- Header Section -->
     <div class="flex justify-between items-start border-b border-gray-100 pb-5 mb-5">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Order #{{ $order->order_id }}</h1>
-            <p class="text-xs text-gray-500 mt-1">Placed on {{ $order->created_at->format('F d, Y \a\t g:i A') }}</p>
+            <!-- Removed extra # symbol to avoid double ## -->
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Order {{ $order->order_code }}</h1>
+            <p class="text-xs text-gray-500 mt-1">Placed on {{ \Carbon\Carbon::parse($order->order_date)->format('F d, Y \a\t g:i A') }}</p>
         </div>
         <div>
             <!-- Dynamic Status Badge -->
@@ -25,27 +26,27 @@
         </div>
     </div>
 
-    <!-- Details Grid Grid -->
+    <!-- Details Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Customer Info Box -->
         <div class="p-4 bg-slate-50/50 rounded-lg border border-gray-100">
             <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Customer Details</h3>
-            <p class="text-sm font-semibold text-gray-800">{{ $order->customer }}</p>
-            <p class="text-xs text-gray-500 mt-1">Payment Method: <span class="font-medium text-gray-700">{{ $order->method }}</span></p>
+            <p class="text-sm font-semibold text-gray-800">{{ $order->customer_name }}</p>
+            <p class="text-xs text-gray-500 mt-1">Payment Method: <span class="font-medium text-gray-700">{{ $order->payment_method }}</span></p>
         </div>
 
-        <!-- Fulfillment Calculations Box -->
+        <!-- Order Summary Box -->
         <div class="p-4 bg-slate-50/50 rounded-lg border border-gray-100">
             <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Order Summary</h3>
             <div class="flex justify-between text-sm text-gray-600 mb-1">
                 <span>Items Ordered:</span>
-                <span class="font-bold text-gray-800">{{ $order->qty }} units</span>
+                <span class="font-bold text-gray-800">{{ $order->qty ?? 1 }} units</span>
             </div>
             <div class="flex justify-between text-base font-bold text-gray-900 border-t border-dashed border-gray-200 pt-2 mt-2">
                 <span>Total Amount:</span>
-                <span>₱{{ number_format($order->amount, 2) }}</span>
+                <span>₱{{ number_format($order->total_amount, 2) }}</span>
             </div>
         </div>
     </div>
-</div>
+</div> <!-- MUST HAVE CLOSING DIV HERE -->
 @endsection

@@ -39,7 +39,7 @@
 <body class="flex min-h-screen">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar w-64 text-white flex flex-col p-6">
+    <aside class="sidebar w-64 text-white flex flex-col p-6 flex-shrink-0">
 
         <div class="flex items-center gap-2 mb-8">
             <div
@@ -111,10 +111,11 @@
 
     </aside>
 
-
-    <main class="flex-1 min-w-0 flex flex-col bg-[#f8fafc] pt-5 pl-5">
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 min-w-0 flex flex-col bg-[#f8fafc] p-8 overflow-y-auto">
         @yield('content')
     </main>
 
+    @stack('scripts')
 </body>
 </html>
