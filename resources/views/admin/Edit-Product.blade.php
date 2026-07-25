@@ -1,301 +1,830 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Product</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+```
+<meta charset="UTF-8">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body{
-            font-family:'Poppins',sans-serif;
-            background:#f5f7fb;
-        }
-        .sidebar{
-            background: linear-gradient(
-                180deg,
-                #213a8f 0%,
-                #13235e 100%
-            );
-        }
+<title>Edit Product</title>
 
-        .active-menu{
-            background:#23d18b;
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    @keyframes popup {
+
+        0% {
+            opacity: 0;
+            transform: scale(.85) translateY(30px);
         }
 
-        .icon-box{
-            width:32px;
-            height:32px;
-            border-radius:10px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:15px;
-            flex-shrink:0;
+        100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
         }
 
-        .form-card{
-            transition:.3s;
-        }
+    }
 
-        .upload-box{
-            border:2px dashed #cbd1e0;
-        }
-    </style>
+    .animate-popup {
+        animation: popup .35s ease;
+    }
+
+</style>
+```
+
 </head>
 
-<body>
+<body class="bg-slate-100">
 
 <div class="flex min-h-screen">
 
-     <!-- SIDEBAR -->
-    <aside class="sidebar w-64 text-white flex flex-col p-6">
+```
+<!-- ========================= -->
+<!-- SIDEBAR -->
+<!-- ========================= -->
 
-        <div class="flex items-center gap-2 mb-8">
-            <div
-                class="w-9 h-9 rounded-full border-2 border-emerald-400 flex items-center justify-center text-emerald-400 font-bold text-lg">
-                G
-            </div>
+<aside class="w-64 bg-gradient-to-b from-indigo-900 to-indigo-800 text-white shadow-2xl">
 
-            <div class="font-extrabold text-xl tracking-wide">
-                OG TECH
-            </div>
-        </div>
+    <div class="p-6 border-b border-indigo-700">
 
-        <div class="mb-8">
-            <input
-                type="text"
-                placeholder="Search"
-                class="w-full rounded-full bg-white/10 border border-white/20 placeholder-gray-300 text-white text-sm px-4 py-2 focus:outline-none focus:bg-white/20">
-        </div>
+        <h1 class="text-3xl font-black tracking-wide">
 
-        <h3 class="text-xs font-bold text-emerald-400 tracking-widest uppercase mb-4">
-            Main Menu
-        </h3>
+            <span class="text-green-400">
+                OG
+            </span>
 
-        <nav class="space-y-2">
+            TECH
 
-            <a href="{{ route('dashboard') }}"
-               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
-                <span class="icon-box bg-white/20">🔲</span>
-                Dashboard
-            </a>
+        </h1>
 
-            <a href="{{ route('inventory.index') }}"
-               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
-                <span class="icon-box bg-blue-400/20">📦</span>
-                Inventory
-            </a>
-
-            <a href="#" title="Not wired up yet"
-               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
-                <span class="icon-box bg-orange-400/20">🛒</span>
-                Orders
-            </a>
-
-            <a href="{{ route('products.index') }}"
-               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
-                <span class="icon-box bg-yellow-400/20">🏷️</span>
-                Products
-            </a>
-
-            <a href="{{ route('customers.index') }}"
-               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
-                <span class="icon-box bg-slate-400/20">💳</span>
-                Customers &amp; Payments
-            </a>
-
-            <a href="{{ route('reports') }}"
-               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
-                <span class="icon-box bg-emerald-400/20">📊</span>
-                Reports
-            </a>
-
-            <a href="#" title="Not wired up yet"
-               class="menu-item flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-200 hover:bg-white/10">
-                <span class="icon-box bg-slate-400/20">⚙️</span>
-                Settings
-            </a>
-
-        </nav>
-
-    </aside>
-    
-    <main class="flex-1 p-8">
-
-        <h2 class="text-4xl font-bold">
-            Edit Product Information
-        </h2>
-
-        <p class="text-gray-500 mb-8">
-            Edit product information.
+        <p class="text-indigo-200 text-sm mt-2">
+            Inventory Management
         </p>
 
-        @if ($errors->any())
-            <div class="bg-red-50 border border-red-200 text-red-700 rounded-lg p-4 mb-6">
-                <ul class="list-disc list-inside text-sm">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+    </div>
+
+    <nav class="mt-5 px-3 space-y-2">
+
+        <a href="{{ url('/home') }}"
+           class="block px-4 py-3 rounded-lg hover:bg-indigo-700 transition">
+
+            🏠 Dashboard
+
+        </a>
+
+        <a href="{{ url('/inventory') }}"
+           class="block px-4 py-3 rounded-lg bg-emerald-500 font-semibold shadow">
+
+            📦 Inventory
+
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- ========================= -->
+<!-- MAIN CONTENT -->
+<!-- ========================= -->
+
+<main class="flex-1 p-10">
+
+    <!-- HEADER -->
+
+    <div class="flex justify-between items-center mb-8">
+
+        <div>
+
+            <h2 class="text-4xl font-black text-indigo-900">
+
+                Edit Product
+
+            </h2>
+
+            <p class="text-gray-500 mt-2">
+
+                Update product information stored in your inventory.
+
+            </p>
+
+        </div>
+
+        <a href="{{ url('/inventory') }}"
+           class="bg-gray-800 hover:bg-black text-white px-6 py-3 rounded-xl shadow-lg transition">
+
+            ← Back to Inventory
+
+        </a>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ERROR MESSAGES -->
+    <!-- ========================= -->
+
+    @if ($errors->any())
+
+        <div class="bg-red-100 border border-red-300 text-red-700 rounded-xl p-5 mb-8">
+
+            <h3 class="font-bold mb-2">
+                Please fix the following errors:
+            </h3>
+
+            <ul class="list-disc list-inside">
+
+                @foreach ($errors->all() as $error)
+
+                    <li>{{ $error }}</li>
+
+                @endforeach
+
+            </ul>
+
+        </div>
+
+    @endif
+
+
+    <!-- ========================= -->
+    <!-- SUCCESS MESSAGE -->
+    <!-- ========================= -->
+
+    @if (session('success'))
+
+        <div class="bg-green-100 border border-green-300 text-green-700 rounded-xl p-5 mb-8">
+
+            {{ session('success') }}
+
+        </div>
+
+    @endif
+
+
+    <!-- ========================= -->
+    <!-- PRODUCT SUMMARY -->
+    <!-- ========================= -->
+
+    <div class="grid md:grid-cols-4 gap-5 mb-8">
+
+
+        <!-- PRODUCT ID -->
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+
+            <p class="text-gray-500 text-sm">
+
+                Product ID
+
+            </p>
+
+            <h2 class="text-3xl font-bold text-indigo-700 mt-2">
+
+                #{{ $product->id }}
+
+            </h2>
+
+        </div>
+
+
+        <!-- CURRENT STOCK -->
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+
+            <p class="text-gray-500 text-sm">
+
+                Current Stock
+
+            </p>
+
+            <h2 id="stockPreview"
+                class="text-3xl font-bold text-green-600 mt-2">
+
+                {{ $product->stock_quantity }}
+
+            </h2>
+
+        </div>
+
+
+        <!-- SELLING PRICE -->
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+
+            <p class="text-gray-500 text-sm">
+
+                Selling Price
+
+            </p>
+
+            <h2 class="text-3xl font-bold text-blue-700 mt-2">
+
+                ₱{{ number_format($product->price, 2) }}
+
+            </h2>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+
+            <p class="text-gray-500 text-sm">
+
+                Status
+
+            </p>
+
+            <div class="mt-3">
+
+                @if ($product->status === 'active')
+
+                    <span class="px-4 py-2 rounded-full bg-green-600 text-white font-semibold">
+
+                        Active
+
+                    </span>
+
+                @else
+
+                    <span class="px-4 py-2 rounded-full bg-red-600 text-white font-semibold">
+
+                        Inactive
+
+                    </span>
+
+                @endif
+
             </div>
-        @endif
+
+        </div>
+
+    </div>
 
 
+    <!-- ========================= -->
+    <!-- EDIT FORM -->
+    <!-- ========================= -->
 
-        <form action="{{ route('products.update', $product->id) }}"
-            method="POST"
-            enctype="multipart/form-data">
+    <form
 
-            @csrf
-            @method('PUT')
+        action="{{ route('products.update', $product->id) }}"
 
-            <div class="grid lg:grid-cols-3 gap-6">
+        method="POST"
 
-                <!-- PRODUCT INFORMATION -->
-                <div class="form-card lg:col-span-2 bg-white rounded-2xl border p-6">
+        id="editForm"
 
-                    <h2 class="font-bold text-lg text-blue-950 mb-5">
-                        Product Information
-                    </h2>
+        class="bg-white rounded-3xl shadow-2xl p-10">
 
-                    <div class="grid md:grid-cols-2 gap-5">
+        @csrf
 
-                        <div>
-                            <label class="block text-sm font-semibold mb-1">Product Name</label>
-                            <input type="text" name="name" placeholder="Name"
-                                   class="w-full border rounded-lg px-3 py-2 text-sm" required>
-                        </div>
+        @method('PUT')
 
-                        <div>
-                            <label class="block text-sm font-semibold mb-1">Status</label>
-                            <input type="text" name="status" placeholder="On Stock, Low, etc."
-                                   class="w-full border rounded-lg px-3 py-2 text-sm">
-                        </div>
 
-                        <div>
-                            <label class="block text-sm font-semibold mb-1">Brand</label>
-                            <input type="text" name="brand" placeholder="ASUS"
-                                   class="w-full border rounded-lg px-3 py-2 text-sm">
-                        </div>
+        <div class="grid md:grid-cols-2 gap-8">
 
-                        <div>
-                            <label class="block text-sm font-semibold mb-1">Category</label>
-                            <select name="category_id" class="w-full border rounded-lg px-3 py-2 text-sm">
-                                <option value="">Select category</option>
-                                <option value="1">Peripherals</option>
-                                <option value="2">Audio</option>
-                                <option value="3">Accessories</option>
-                            </select>
-                        </div>
 
-                        <div>
-                            <label class="block text-sm font-semibold mb-1">Supplier</label>
-                            <input type="text" name="supplier" placeholder="Company Name etc."
-                                   class="w-full border rounded-lg px-3 py-2 text-sm">
-                        </div>
+            <!-- PRODUCT NAME -->
 
-                    </div>
+            <div>
 
-                    <div class="mt-5">
-                        <label class="block text-sm font-semibold mb-1">Description</label>
-                        <textarea name="description" rows="5"
-                                  class="w-full border rounded-lg px-3 py-2 text-sm"></textarea>
+                <label class="font-bold text-gray-700">
+
+                    Product Name
+
+                </label>
+
+                <input
+
+                    type="text"
+
+                    name="product_name"
+
+                    required
+
+                    value="{{ old('product_name', $product->product_name) }}"
+
+                    class="mt-2 w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+
+            </div>
+
+
+            <!-- BRAND -->
+
+            <div>
+
+                <label class="font-bold text-gray-700">
+
+                    Brand
+
+                </label>
+
+                <input
+
+                    type="text"
+
+                    name="brand"
+
+                    value="{{ old('brand', $product->brand) }}"
+
+                    class="mt-2 w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div>
+
+                <label class="font-bold text-gray-700">
+
+                    Category
+
+                </label>
+
+                <input
+
+                    type="text"
+
+                    name="category"
+
+                    value="{{ old('category', $product->category) }}"
+
+                    class="mt-2 w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div>
+
+                <label class="font-bold text-gray-700">
+
+                    Status
+
+                </label>
+
+                <select
+
+                    name="status"
+
+                    class="mt-2 w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+
+                    <option value="active"
+
+                        {{ old('status', $product->status) === 'active' ? 'selected' : '' }}>
+
+                        Active
+
+                    </option>
+
+                    <option value="inactive"
+
+                        {{ old('status', $product->status) === 'inactive' ? 'selected' : '' }}>
+
+                        Inactive
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SELLING PRICE -->
+
+            <div>
+
+                <label class="font-bold text-gray-700">
+
+                    Selling Price (₱)
+
+                </label>
+
+                <input
+
+                    type="number"
+
+                    step="0.01"
+
+                    min="0"
+
+                    name="price"
+
+                    required
+
+                    value="{{ old('price', $product->price) }}"
+
+                    class="mt-2 w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+
+            </div>
+
+
+            <!-- COST PRICE -->
+
+            <div>
+
+                <label class="font-bold text-gray-700">
+
+                    Cost Price (₱)
+
+                </label>
+
+                <input
+
+                    type="number"
+
+                    step="0.01"
+
+                    min="0"
+
+                    name="cost"
+
+                    value="{{ old('cost', $product->cost) }}"
+
+                    class="mt-2 w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+
+            </div>
+
+
+            <!-- STOCK QUANTITY -->
+
+            <div>
+
+                <label class="font-bold text-gray-700">
+
+                    Stock Quantity
+
+                </label>
+
+                <input
+
+                    type="number"
+
+                    id="stockInput"
+
+                    min="0"
+
+                    name="stock_quantity"
+
+                    required
+
+                    value="{{ old('stock_quantity', $product->stock_quantity) }}"
+
+                    class="mt-2 w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="md:col-span-2">
+
+                <label class="font-bold text-gray-700">
+
+                    Product Description
+
+                </label>
+
+                <textarea
+
+                    name="description"
+
+                    rows="5"
+
+                    class="mt-2 w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none">{{ old('description', $product->description) }}</textarea>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- PRODUCT INFORMATION -->
+        <!-- ========================= -->
+
+        <div class="mt-10 border-t pt-8">
+
+            <h3 class="text-2xl font-bold text-gray-700 mb-6">
+
+                Product Information
+
+            </h3>
+
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+
+                <!-- PRODUCT ID -->
+
+                <div class="bg-indigo-50 rounded-2xl p-6 border">
+
+                    <p class="text-gray-500">
+
+                        Product ID
+
+                    </p>
+
+                    <p class="text-3xl font-bold text-indigo-700 mt-3">
+
+                        #{{ $product->id }}
+
+                    </p>
+
+                </div>
+
+
+                <!-- CURRENT STATUS -->
+
+                <div class="bg-green-50 rounded-2xl p-6 border">
+
+                    <p class="text-gray-500">
+
+                        Current Status
+
+                    </p>
+
+                    <div class="mt-4">
+
+                        @if ($product->status === 'active')
+
+                            <span class="bg-green-600 text-white px-4 py-2 rounded-full">
+
+                                Active
+
+                            </span>
+
+                        @else
+
+                            <span class="bg-red-600 text-white px-4 py-2 rounded-full">
+
+                                Inactive
+
+                            </span>
+
+                        @endif
+
                     </div>
 
                 </div>
 
-                <!-- PRODUCT DETAILS -->
-                <div class="form-card bg-white rounded-2xl border p-6">
 
-                    <h2 class="font-bold text-lg text-blue-950 mb-5">
-                        Product Details
-                    </h2>
+                <!-- LAST UPDATED -->
 
-                    <label for="productImage"
-                           class="upload-box rounded-xl h-40 flex items-center justify-center text-sm text-gray-500 mb-5 cursor-pointer text-center px-3">
-                        <span id="uploadLabel">Upload Product Image</span>
-                    </label>
-                    <input type="file" id="productImage" name="image" accept="image/*" class="hidden">
+                <div class="bg-blue-50 rounded-2xl p-6 border">
 
-                    <div class="mb-4">
-                        <label class="block text-sm font-semibold mb-1">Selling Price</label>
-                        <div class="relative">
-                            <span class="absolute left-3 top-2.5 text-gray-400 text-sm">₱</span>
-                            <input type="number" step="0.01" name="price" placeholder="0.00"
-                                   class="w-full border rounded-lg pl-7 pr-3 py-2 text-sm">
-                        </div>
-                    </div>
+                    <p class="text-gray-500">
 
-                    <div class="mb-4">
-                        <label class="block text-sm font-semibold mb-1">Cost Price</label>
-                        <div class="relative">
-                            <span class="absolute left-3 top-2.5 text-gray-400 text-sm">₱</span>
-                            <input type="number" step="0.01" name="cost" placeholder="0.00"
-                                   class="w-full border rounded-lg pl-7 pr-3 py-2 text-sm">
-                        </div>
-                    </div>
+                        Last Updated
 
-                    <div class="mb-4">
-                        <label class="block text-sm font-semibold mb-1">Initial Stock</label>
-                        <input type="number" name="stock_quantity" placeholder="0"
-                               class="w-full border rounded-lg px-3 py-2 text-sm">
-                    </div>
+                    </p>
 
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Warehouse</label>
-                        <select name="warehouse" class="w-full border rounded-lg px-3 py-2 text-sm">
-                            <option>Main Warehouse</option>
-                            <option>Secondary Warehouse</option>
-                        </select>
-                    </div>
+                    <p class="mt-3 font-bold text-lg">
+
+                        {{ $product->updated_at ? $product->updated_at->format('F d, Y h:i A') : 'N/A' }}
+
+                    </p>
 
                 </div>
 
             </div>
 
-            <!-- GUIDELINES + ACTIONS -->
-            <div class="form-card bg-white rounded-2xl border p-6 mt-6">
+        </div>
 
-                <h2 class="font-bold text-lg text-blue-950 mb-3">
-                    Product Guidelines
-                </h2>
 
-                <ul class="list-disc list-inside text-sm text-gray-600 space-y-1 mb-6">
-                    <li>Appropriate Product Name.</li>
-                    <li>Upload a clear product image.</li>
-                    <li>Verify prices before saving.</li>
-                    <li>Select the correct warehouse.</li>
-                </ul>
+        <!-- ========================= -->
+        <!-- ACTION BUTTONS -->
+        <!-- ========================= -->
 
-                <div class="flex justify-end gap-3">
-                    <button type="button" onclick="window.location.href='{{ route('dashboard') }}'"
-                            class="border rounded-lg px-5 py-2 text-sm font-semibold hover:bg-gray-100">
-                        Cancel
-                    </button>
+        <div class="flex justify-end gap-4 mt-10">
 
-                    <button type="button" onclick="saveProduct('draft')"
-                            class="border rounded-lg px-5 py-2 text-sm font-semibold hover:bg-gray-100">
-                        Save Draft
-                    </button>
 
-                    <button type="submit"
-                            class="bg-emerald-500 text-white rounded-lg px-6 py-2 text-sm font-semibold hover:bg-emerald-600">
-                        Save Product
-                    </button>
-                </div>
+            <!-- CANCEL -->
 
-            </div>
+            <a
 
-        </form>
+                href="{{ url('/inventory') }}"
 
-    </main>
+                class="px-6 py-3 rounded-xl bg-gray-300 hover:bg-gray-400 transition">
+
+                Cancel
+
+            </a>
+
+
+            <!-- SAVE -->
+
+            <button
+
+                type="submit"
+
+                class="px-8 py-3 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white font-semibold shadow-lg transition hover:scale-105">
+
+                💾 Save Changes
+
+            </button>
+
+        </div>
+
+    </form>
+
+</main>
+```
 
 </div>
 
+<!-- ========================= -->
+
+<!-- CONFIRMATION MODAL -->
+
+<!-- ========================= -->
+
+<div
+
+```
+id="confirmModal"
+
+class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
+
+
+<div class="bg-white rounded-2xl shadow-2xl w-[420px] p-7 animate-popup">
+
+
+    <div class="flex justify-center">
+
+        <div class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+
+                 class="w-10 h-10 text-blue-600"
+
+                 fill="none"
+
+                 viewBox="0 0 24 24"
+
+                 stroke="currentColor">
+
+                <path
+
+                    stroke-linecap="round"
+
+                    stroke-linejoin="round"
+
+                    stroke-width="2"
+
+                    d="M5 13l4 4L19 7"/>
+
+            </svg>
+
+        </div>
+
+    </div>
+
+
+    <h2 class="text-2xl font-bold text-center mt-5">
+
+        Save Changes?
+
+    </h2>
+
+
+    <p class="text-center text-gray-600 mt-3">
+
+        This will update the selected product information.
+
+    </p>
+
+
+    <div class="flex justify-center gap-4 mt-8">
+
+
+        <button
+
+            type="button"
+
+            id="cancelBtn"
+
+            class="px-6 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 transition">
+
+            Cancel
+
+        </button>
+
+
+        <button
+
+            type="button"
+
+            id="confirmBtn"
+
+            class="px-6 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition">
+
+            Update
+
+        </button>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- ========================= -->
+
+<!-- JAVASCRIPT -->
+
+<!-- ========================= -->
+
+<script>
+
+    const form = document.getElementById("editForm");
+
+    const modal = document.getElementById("confirmModal");
+
+    const confirmBtn = document.getElementById("confirmBtn");
+
+    const cancelBtn = document.getElementById("cancelBtn");
+
+
+    // Show confirmation modal
+
+    form.addEventListener("submit", function (e) {
+
+        e.preventDefault();
+
+        modal.classList.remove("hidden");
+
+        modal.classList.add("flex");
+
+    });
+
+
+    // Cancel modal
+
+    cancelBtn.addEventListener("click", function () {
+
+        modal.classList.add("hidden");
+
+        modal.classList.remove("flex");
+
+    });
+
+
+    // Confirm update
+
+    confirmBtn.addEventListener("click", function () {
+
+        modal.classList.add("hidden");
+
+        modal.classList.remove("flex");
+
+        form.submit();
+
+    });
+
+
+    // Close modal when clicking outside
+
+    modal.addEventListener("click", function (e) {
+
+        if (e.target === modal) {
+
+            modal.classList.add("hidden");
+
+            modal.classList.remove("flex");
+
+        }
+
+    });
+
+
+    // Live stock preview
+
+    const stockInput = document.getElementById("stockInput");
+
+    const stockPreview = document.getElementById("stockPreview");
+
+
+    stockInput.addEventListener("input", function () {
+
+        stockPreview.textContent = this.value || 0;
+
+    });
+
+</script>
+
 </body>
+
 </html>
