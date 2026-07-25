@@ -111,14 +111,30 @@ class DashboardController extends Controller
                 ->get()
             : collect();
 
+        // ---- Revenue by Store: total booked vs. verified, from customer_transactions ----
+        $storeRevenue = Schema::hasTable('customer_transactions')
+            ? DB::table('customer_transactions')
+                ->select(
+                    'store',
+                    DB::raw('SUM(amount) as total_booked'),
+                    DB::raw("SUM(CASE WHEN status = 'Verified' THEN amount ELSE 0 END) as verified_revenue")
+                )
+                ->groupBy('store')
+                ->orderByDesc('total_booked')
+                ->get()
+            : collect();
+
         return view('admin.reports', [
-            'monthLabels'     => $monthLabels,
-            'monthlyRevenue'  => $monthlyRevenue,
-            'monthlyOrders'   => $monthlyOrders,
-            'paymentLabels'   => $paymentLabels,
-            'paymentValues'   => $paymentValues,
-            'topProductNames' => $topProducts->pluck('name'),
-            'topProductUnits' => $topProducts->pluck('units_sold'),
+            'monthLabels'          => $monthLabels,
+            'monthlyRevenue'       => $monthlyRevenue,
+            'monthlyOrders'        => $monthlyOrders,
+            'paymentLabels'        => $paymentLabels,
+            'paymentValues'        => $paymentValues,
+            'topProductNames'      => $topProducts->pluck('product_name'),
+            'topProductUnits'      => $topProducts->pluck('units_sold'),
+            'storeLabels'          => $storeRevenue->pluck('store'),
+            'storeTotalBooked'     => $storeRevenue->pluck('total_booked'),
+            'storeVerifiedRevenue' => $storeRevenue->pluck('verified_revenue'),
         ]);
     }
 }

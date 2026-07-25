@@ -212,6 +212,12 @@
                 <div class="sub">Units sold this month</div>
                 <canvas id="topProductsChart" height="300"></canvas>
             </div>
+
+            <div class="report-panel">
+                <h3>Revenue by Store</h3>
+                <div class="sub">Total booked vs. verified revenue (customer_transactions)</div>
+                <canvas id="storeRevenueChart" height="300"></canvas>
+            </div>
         </div>
     </div>
 </div>
@@ -232,6 +238,13 @@ const paymentsData = {
 const topProductsData = {
     labels: {!! json_encode($topProductNames) !!},
     unitsSold: {!! json_encode($topProductUnits) !!}
+};
+
+/* Sourced from customer_transactions: total booked amount vs. amount with status = 'Verified', grouped by store */
+const storeRevenueData = {
+    labels: {!! json_encode($storeLabels) !!},
+    totalBooked: {!! json_encode($storeTotalBooked) !!},
+    verifiedRevenue: {!! json_encode($storeVerifiedRevenue) !!}
 };
 
 const ctx = document.getElementById('revenueChart');
@@ -301,6 +314,29 @@ new Chart(topProductsCtx, {
         scales: {
             x: { grid: { color: '#eef0f5' }, ticks: { font: { size: 10 } } },
             y: { grid: { display: false }, ticks: { font: { size: 10.5 } } }
+        }
+    }
+});
+
+const storeRevenueCtx = document.getElementById('storeRevenueChart');
+new Chart(storeRevenueCtx, {
+    type: 'bar',
+    data: {
+        labels: storeRevenueData.labels,
+        datasets: [
+            { label: 'Total Booked', data: storeRevenueData.totalBooked, backgroundColor: '#3aa0e8', borderRadius: 3, barThickness: 22 },
+            { label: 'Verified Revenue', data: storeRevenueData.verifiedRevenue, backgroundColor: '#1BC49B', borderRadius: 3, barThickness: 22 }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } },
+        scales: {
+            y: {
+                grid: { color: '#eef0f5' },
+                ticks: { font: { size: 10 }, callback: function(value) { return '₱' + value.toLocaleString(); } }
+            },
+            x: { grid: { display: false }, ticks: { font: { size: 10 } } }
         }
     }
 });
