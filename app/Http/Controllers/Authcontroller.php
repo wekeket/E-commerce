@@ -80,7 +80,11 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard')->with('status', 'Account created! Welcome to OG TECH.');
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('dashboard')->with('status', 'Account created! Welcome to OG TECH.');
+        }
+
+        return redirect()->route('user.dashboard');
     }
 
     /**
