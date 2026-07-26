@@ -8,4 +8,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/products', [apiController::class, 'apiIndex']);
+Route::get('/orders', [apiController::class, 'apiOrder']);
