@@ -51,9 +51,6 @@ class apiController extends Controller
     ], 200, [], JSON_PRETTY_PRINT);
     }
 
-    public function apiCustomerOrder() {
-
-    }
 
     public function apiProducts() {
 
@@ -94,5 +91,43 @@ class apiController extends Controller
         ], 200, [], JSON_PRETTY_PRINT);
     }
 
-    
+    public function apiGetAll()
+{
+    $orders = Order::all();
+    $products = Product::all();
+    $payments = Payment::all();
+    $customers = Customer::all();
+
+    return response()->json([
+        'status' => 'success',
+        'source_module' => 'Ecommerce Module',
+
+        'modules' => [
+
+            'sales_and_customer_support' => [
+                'target_module' => 'Sales and Customer Support Management Module',
+                'data_count' => $orders->count(),
+                'data' => $orders,
+            ],
+
+            'inventory_and_warehouse' => [
+                'target_module' => 'Inventory and Warehouse Management System Module',
+                'data_count' => $products->count(),
+                'data' => $products,
+            ],
+
+            'finance_and_accounting' => [
+                'target_module' => 'Finance and Accounting Module',
+                'data_count' => $payments->count(),
+                'data' => $payments,
+            ],
+
+            'customer_service_helpdesk' => [
+                'target_module' => 'Customer Service / Helpdesk Module',
+                'data_count' => $customers->count(),
+                'data' => $customers,
+            ],
+        ],
+    ], 200, [], JSON_PRETTY_PRINT);
+}
 }
